@@ -1,16 +1,9 @@
-html,
-body {
-  padding: 0;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-* {
-  box-sizing: border-box;
+@import url("https://fonts.googleapis.com/css2?family=Arvo:wght@700&family=Poppins&display=swap");
+.arvo {
+    font-family: "Arvo", serif;
+    font-family: "Poppins", sans-serif;
 }
