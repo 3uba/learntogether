@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../context/auth";
 
-import { RightMenuDiv } from "./assets/rightmenuDiv";
+import { RightMenuDiv } from "./assets/RightmenuDiv";
 import { MdLogout, MdEvent, MdMessage } from "react-icons/md";
 
 const Navbar = ({ photoURL, displayName, email }) => {

@@ -5,6 +5,9 @@ module.exports = {
     ],
     theme: {
       extend: {},
+      fontFamily: {
+        'arvo': ['Arvo', 'serif']
+      }
     },
     plugins: [],
   }

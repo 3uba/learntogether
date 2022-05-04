@@ -2,7 +2,12 @@ import cookies from "js-cookie";
 import { useRouter } from "next/router";
 
 import { signInWithPopup, GoogleAuthProvider } from "@firebase/auth";
-import { auth, db } from "./firebase";
+import { auth, db, postImages } from "./firebase";
+
+import { uploadBytes } from "firebase/storage";
+import { collection, addDoc, onValue, ref } from "firebase/firestore";
+import { useCollection } from "react-firebase-hooks/firestore";
+import Post from "../components/assets/Post";
 
 const useFirebase = () => {
     const provider = new GoogleAuthProvider();
@@ -33,8 +38,11 @@ const useFirebase = () => {
         return JSON.parse(cookie);
     };
 
-    const addPost = async (title, desc) => {
+    const addPost = async (e, title, desc, picture, closeForm) => {
+        e.preventDefault();
         const { uid } = getUser();
+
+        console.log(uid);
 
         const post = {
             user_id: uid,
@@ -42,23 +50,28 @@ const useFirebase = () => {
             description: desc,
             time: new Date(),
             done: false,
+            photo: picture ? String(picture) : "",
         };
 
-        const res = await db
-            .collection("posts_lt")
-            .add(post)
+        uploadBytes(postImages, picture);
+
+        const dbInstance = collection(db, "posts_lt");
+
+        addDoc(dbInstance, post)
             .then(() => {
-                console.log("Post was added");
+                alert("Added post succesfully");
             })
             .catch((err) => {
-                console.log(err);
+                alert("Error");
             });
+        closeForm();
     };
 
     return {
         signUp,
         signOut,
         getUser,
+        addPost,
     };
 };
 

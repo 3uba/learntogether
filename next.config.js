@@ -8,6 +8,7 @@ module.exports = {
     eslint: {
         ignoreDuringBuilds: true
     },
+    optimizeFonts: false,
     // images: {
     //     domains: ["lh3.googleusercontent.com"],
     //     formats: ["image/webp"],

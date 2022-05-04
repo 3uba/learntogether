@@ -14,6 +14,10 @@ const Home = () => {
     const router = useRouter();
 
     useEffect(() => {
+        getUser() == null && router.push("/signup");
+    });
+
+    useEffect(() => {
         getUser() == null ? router.push("/signup") : setUser(getUser());
         setLoading(false);
     }, [router, getUser]);

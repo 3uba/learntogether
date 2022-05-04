@@ -14,7 +14,6 @@ export const RightMenuDiv = (props) => {
             ) : (
                 <>{props.children}</>
             )}
-            {console.log(props.className)}
         </div>
     );
 };
