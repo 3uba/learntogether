@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import { FileUploader } from "react-drag-drop-files";
-import { useAuth } from "../../context/auth";
+import { useAuth } from "../context/auth";
 const fileTypes = ["JPG", "PNG"];
 
 const Popupform = ({ photoURL, name, setPopupForm }) => {

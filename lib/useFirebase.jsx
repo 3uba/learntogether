@@ -4,7 +4,6 @@ import { signInWithPopup, GoogleAuthProvider } from "@firebase/auth";
 import { auth, db, postImages } from "./firebase";
 import { uploadBytes } from "firebase/storage";
 import { collection, addDoc } from "firebase/firestore";
-import { findUser } from "./firebase.admin";
 
 const useFirebase = () => {
     const provider = new GoogleAuthProvider();
@@ -37,12 +36,14 @@ const useFirebase = () => {
 
     const addPost = async (e, title, desc, picture, closeForm) => {
         e.preventDefault();
-        const { uid } = getUser();
+        const { displayName, photoURL, uid } = getUser();
 
         console.log(uid);
 
         const post = {
             user_id: uid,
+            user_name: displayName,
+            user_photo: photoURL,
             title: title,
             description: desc,
             time: new Date(),
@@ -70,7 +71,7 @@ const useFirebase = () => {
                 const data = await db
                     .collection("posts_lt")
                     .orderBy("time", "desc")
-                    .limit(2)
+                    .limit(20)
                     .get();
 
                 let posts = [];
@@ -81,6 +82,8 @@ const useFirebase = () => {
                         id: doc.id,
                         title: doc.data().title,
                         desc: doc.data().description,
+                        user_name: doc.data().user_name,
+                        user_photo: doc.data().user_photo,
                     });
 
                     lastKey = doc.data().time;
@@ -98,7 +101,7 @@ const useFirebase = () => {
                     .collection("posts_lt")
                     .orderBy("time", "desc")
                     .startAfter(key)
-                    .limit(2)
+                    .limit(20)
                     .get();
 
                 let posts = [];
@@ -109,6 +112,8 @@ const useFirebase = () => {
                         id: doc.id,
                         title: doc.data().title,
                         desc: doc.data().description,
+                        user_name: doc.data().user_name,
+                        user_photo: doc.data().user_photo,
                     });
 
                     lastKey = doc.data().time;
@@ -127,7 +132,6 @@ const useFirebase = () => {
         getUser,
         addPost,
         getPosts,
-        findUser,
     };
 };
 
