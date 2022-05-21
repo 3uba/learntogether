@@ -76,15 +76,18 @@ const Main = ({ photoURL, displayName }) => {
 
             <div>
                 <div>
-                    {posts.map(({ id, user_name, user_photo, title, desc }) => (
-                        <Post
-                            key={id}
-                            name={user_name}
-                            picture={user_photo}
-                            title={title}
-                            desc={desc}
-                        />
-                    ))}
+                    {posts.map(
+                        ({ id, user_name, user_photo, title, desc, time }) => (
+                            <Post
+                                key={id}
+                                name={user_name}
+                                picture={user_photo}
+                                title={title}
+                                desc={desc}
+                                time={time}
+                            />
+                        )
+                    )}
                 </div>
                 {nextPosts_loading ? (
                     <div className="">Loading...</div>

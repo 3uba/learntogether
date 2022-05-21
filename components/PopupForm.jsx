@@ -86,7 +86,7 @@ const Popupform = ({ photoURL, name, setPopupForm }) => {
                     type="submit"
                     className="bg-[#2a2b2c] hover:bg-[#242526] text-white font-bold py-2 px-4 rounded bottom-3 right-3 absolute"
                 >
-                    Add post
+                    Publish
                 </button>
             </form>
         </div>

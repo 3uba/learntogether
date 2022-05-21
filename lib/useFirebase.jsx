@@ -84,6 +84,7 @@ const useFirebase = () => {
                         desc: doc.data().description,
                         user_name: doc.data().user_name,
                         user_photo: doc.data().user_photo,
+                        time: doc.data().time,
                     });
 
                     lastKey = doc.data().time;
@@ -114,6 +115,7 @@ const useFirebase = () => {
                         desc: doc.data().description,
                         user_name: doc.data().user_name,
                         user_photo: doc.data().user_photo,
+                        time: doc.data().time,
                     });
 
                     lastKey = doc.data().time;
