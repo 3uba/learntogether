@@ -13,4 +13,10 @@ module.exports = {
     //     domains: ["lh3.googleusercontent.com"],
     //     formats: ["image/webp"],
     // }
+    
+    "browser": {
+        "fs": false,
+        "path": false,
+        "os": false
+    }
 }

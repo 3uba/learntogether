@@ -1,13 +1,10 @@
 import cookies from "js-cookie";
 import { useRouter } from "next/router";
-
 import { signInWithPopup, GoogleAuthProvider } from "@firebase/auth";
 import { auth, db, postImages } from "./firebase";
-
 import { uploadBytes } from "firebase/storage";
-import { collection, addDoc, onValue, ref } from "firebase/firestore";
-import { useCollection } from "react-firebase-hooks/firestore";
-import Post from "../components/assets/Post";
+import { collection, addDoc } from "firebase/firestore";
+import { findUser } from "./firebase.admin";
 
 const useFirebase = () => {
     const provider = new GoogleAuthProvider();
@@ -67,11 +64,70 @@ const useFirebase = () => {
         closeForm();
     };
 
+    const getPosts = {
+        postsFirstBatch: async function () {
+            try {
+                const data = await db
+                    .collection("posts_lt")
+                    .orderBy("time", "desc")
+                    .limit(2)
+                    .get();
+
+                let posts = [];
+                let lastKey = "";
+
+                data.forEach((doc) => {
+                    posts.push({
+                        id: doc.id,
+                        title: doc.data().title,
+                        desc: doc.data().description,
+                    });
+
+                    lastKey = doc.data().time;
+                });
+
+                return { posts, lastKey };
+            } catch (e) {
+                console.log(e);
+            }
+        },
+
+        postsNextBatch: async (key) => {
+            try {
+                const data = await db
+                    .collection("posts_lt")
+                    .orderBy("time", "desc")
+                    .startAfter(key)
+                    .limit(2)
+                    .get();
+
+                let posts = [];
+                let lastKey = "";
+
+                data.forEach((doc) => {
+                    posts.push({
+                        id: doc.id,
+                        title: doc.data().title,
+                        desc: doc.data().description,
+                    });
+
+                    lastKey = doc.data().time;
+                });
+
+                return { posts, lastKey };
+            } catch (e) {
+                console.log(e);
+            }
+        },
+    };
+
     return {
         signUp,
         signOut,
         getUser,
         addPost,
+        getPosts,
+        findUser,
     };
 };
 

@@ -1,22 +1,62 @@
 import React, { useState, useEffect } from "react";
-import { MdPhoto } from "react-icons/md";
-
-import { collection, DocumentSnapshot } from "firebase/firestore";
-import { useCollection } from "react-firebase-hooks/firestore";
-
 import Popupform from "./assets/PopupForm";
 import Post from "./assets/Post";
-
 import { useAuth } from "../context/auth";
-import { db } from "../lib/firebase";
 
 const Main = ({ photoURL, displayName }) => {
     const [popupForm, setPopupForm] = useState(false);
-    const [limit, setLimit] = useState(3);
+    const { getPosts, findUser } = useAuth();
 
-    const [posts, postsloading, postserror] = useCollection(
-        db.collection("posts_lt").orderBy("time", "desc").limit(limit),
-        {}
+    const [posts, setPosts] = useState([]);
+    const [lastKey, setLastKey] = useState("");
+    const [nextPosts_loading, setNextPostsLoading] = useState(false);
+
+    useEffect(() => {
+        getPosts
+            .postsFirstBatch()
+            .then((res) => {
+                setPosts(res.posts);
+                setLastKey(res.lastKey);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+        findUser();
+    }, [getPosts, findUser]);
+
+    const fetchMorePosts = (key) => {
+        console.log("fetching more posts...");
+
+        if (key) {
+            setNextPostsLoading(true);
+            getPosts
+                .postsNextBatch(key)
+                .then((res) => {
+                    setLastKey(res.lastKey);
+
+                    setPosts(posts.concat(res.posts));
+                    setNextPostsLoading(false);
+                })
+                .catch((err) => {
+                    console.log(err);
+                    setNextPostsLoading(false);
+                });
+        }
+    };
+
+    const allPosts = (
+        <div className="">
+            {posts.map(({ id, title, desc }) => {
+                return (
+                    <div className="" key={id}>
+                        <h1>{title}</h1>
+
+                        <p>key: {id}</p>
+                        <p>{desc}</p>
+                    </div>
+                );
+            })}
+        </div>
     );
 
     return (
@@ -50,15 +90,21 @@ const Main = ({ photoURL, displayName }) => {
                 />
             )}
 
-            <div className="">
-                {postserror && (
-                    <strong>Error: {JSON.stringify(postserror)}</strong>
-                )}
-                {postsloading && <span>Collection: Loading...</span>}
-                {posts &&
-                    posts.docs.map((doc, key) => (
-                        <Post key={key} {...doc.data()} />
+            <div>
+                <div>
+                    {posts.map(({ id, title, desc }) => (
+                        <Post key={id} title={title} desc={desc} />
                     ))}
+                </div>
+                {nextPosts_loading ? (
+                    <div className="">Loading...</div>
+                ) : lastKey ? (
+                    <button onClick={() => fetchMorePosts(lastKey)}>
+                        More posts
+                    </button>
+                ) : (
+                    <div className="">You are up to date!</div>
+                )}
             </div>
         </div>
     );
