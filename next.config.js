@@ -18,5 +18,13 @@ module.exports = {
         "fs": false,
         "path": false,
         "os": false
+    },
+    webpack: (config, { isServer }) => {
+        if(!isServer) {
+            config.node = {
+                fs: 'empty'
+            }
+        }
+        return config
     }
 }

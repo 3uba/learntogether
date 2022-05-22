@@ -1,10 +1,9 @@
 import cookies from "js-cookie";
 import { useRouter } from "next/router";
-import { signInWithPopup, GoogleAuthProvider } from "@firebase/auth";
+import { signInWithPopup, GoogleAuthProvider, getAuth } from "@firebase/auth";
 import { auth, db, postImages } from "./firebase";
 import { uploadBytes } from "firebase/storage";
 import { collection, addDoc } from "firebase/firestore";
-
 const useFirebase = () => {
     const provider = new GoogleAuthProvider();
     const router = useRouter();
@@ -132,6 +131,7 @@ const useFirebase = () => {
         signUp,
         signOut,
         getUser,
+        getUserById,
         addPost,
         getPosts,
     };
