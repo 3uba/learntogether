@@ -101,8 +101,8 @@ const useFirebase = () => {
     /**
      * pobiera wszystkie dane uzytkownika z bazy danych
      */
-    const getUserByName = async (id_name) => {
-        const ref = doc(db, "users", id_name);
+    const getUserByName = async (name_id) => {
+        const ref = doc(db, "users", name_id);
         const snap = await getDoc(ref);
         if (snap.exists()) {
             return snap.data();

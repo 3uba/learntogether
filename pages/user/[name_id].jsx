@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 
 import Profile from "../../components/Profile";
+import App from "../../components/App";
 /**
  * [author.jsx]
  * odpowiada za wyswietlanie profilowego,
@@ -13,9 +14,11 @@ const Home = () => {
     const { name_id } = router.query;
 
     return (
-        <div className="w-[100%] h-[100vh] bg-[#242526] flex">
-            <Profile id_name={name_id} />
-        </div>
+        <App>
+            <div className="bg-[#242526] w-[60vw] h-[100vh]">
+                <Profile name_id={name_id} />
+            </div>
+        </App>
     );
 };
 
