@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useAuth } from "../context/auth";
 
 import { MenuButton } from "./Menu";
-import { MdLogout, MdEvent, MdMessage } from "react-icons/md";
+import { MdLogout, MdEvent, MdMessage, MdHome } from "react-icons/md";
 
 const Navbar = ({ photoURL, displayName, email }) => {
     const [loading, setLoading] = useState(true);
@@ -24,7 +24,10 @@ const Navbar = ({ photoURL, displayName, email }) => {
                 />
                 <span className="text-l font-semibold p-2">{displayName}</span>
             </MenuButton>
-
+            <MenuButton link="/">
+                <MdHome size={28} className="m-2" />
+                <span className="text-l font-semibold p-2">Home</span>
+            </MenuButton>
             <MenuButton link="/events">
                 <MdEvent size={28} className="m-2" />
                 <span className="text-l font-semibold p-2">Events</span>

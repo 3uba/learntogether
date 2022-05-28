@@ -1,28 +1,32 @@
-import { useEffect, useState } from "react";
-import { database } from "../lib/firebase";
+import { useState, useEffect } from "react";
 import { useAuth } from "../context/auth";
-import { onValue, push, ref, set, update } from "firebase/database";
-import { getUserById } from "../lib/firebase.admin.config";
 
-const Profile = ({ authorId }) => {
-    const [userData, setUserData] = useState({
-        name: "",
-        picture: "",
-    });
+const Profile = ({ id_name }) => {
+    const { getUserByName } = useAuth();
+
+    const [userData, setUserData] = useState({});
 
     useEffect(() => {
-        onValue(ref(database, `/users/${authorId}`), (snap) => {
-            setUserData({
-                name: snap.val().displayName,
-                picture: snap.val().photoURL,
-            });
-        });
-    }, [authorId]);
+        const fetch = async () => {
+            setUserData(await getUserByName(id_name));
+        };
+
+        fetch();
+    }, [getUserByName, id_name, userData]);
+
+    const { displayName, photoURL } = userData;
 
     return (
-        <div>
-            {userData.name}
-            {getUserById(authorId)}
+        <div className="w-[100%] h-[18vh] flex items-center ">
+            <div className="w-[20%] h-[100%] flex items-center justify-center">
+                <div className="">
+                    <img src={photoURL} alt="" className="rounded-xl " />
+                </div>
+            </div>
+            <div className="w-[80%] h-[100%] flex flex-col justify-center">
+                <div className="text-white">{displayName}</div>
+                <div className="text-white">@{id_name}</div>
+            </div>
         </div>
     );
 };

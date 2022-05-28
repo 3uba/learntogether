@@ -1,14 +1,30 @@
 import cookies from "js-cookie";
 import { useRouter } from "next/router";
+
+// firebase
 import { signInWithPopup, GoogleAuthProvider, getAuth } from "@firebase/auth";
 import { auth, db, postImages } from "./firebase";
 import { uploadBytes } from "firebase/storage";
 import { collection, addDoc, doc, getDoc } from "firebase/firestore";
 
 const useFirebase = () => {
+    /**
+     * Inicjalizacja providera - umozliwa logowanie 
+     * przez googla
+     
+     * i inicjalizacja routera do przenoszonia miedzy stronami
+     */
+
     const provider = new GoogleAuthProvider();
     const router = useRouter();
 
+    /*
+     * signUp
+     * jezeli pierwszy raz sie logujesz zostajesz zapisany z bazie danych
+     * dodatkowo masz robina relacje na twoj uid
+     * jednak jezeli nie jest to twoj pierwszy raz to poprostu sa pobierane
+     * dane z bazy i dodawane do cookiesa
+     */
     const signUp = () => {
         signInWithPopup(auth, provider)
             .then(async (res) => {
@@ -46,12 +62,20 @@ const useFirebase = () => {
             .catch((err) => console.log("signUp error"));
     };
 
+    /*
+     * signOut
+     * usuwanie danych z cookiesa i przenoszenie na strone glowna
+     */
     const signOut = () => {
         cookies.remove("lt_user");
 
         router.push("/signup");
     };
 
+    /**
+     * getUser
+     * pobiera aktualnie zalogowanego uzytkownika
+     */
     const getUser = () => {
         const cookie = cookies.get("lt_user");
         if (!cookie) return null;
@@ -59,6 +83,12 @@ const useFirebase = () => {
         return JSON.parse(cookie);
     };
 
+    /**
+     * getUserByUid
+     * kozysta z utworzonej podczas rejestracji relacji
+     * i pobiera id_name ktory umozliwi pobranie danych uzytkownika z
+     * bazy danych
+     */
     const getUserByUid = async (uid) => {
         const ref = doc(db, "uid_join_user", uid);
         const snap = await getDoc(ref);
@@ -68,6 +98,21 @@ const useFirebase = () => {
         }
     };
 
+    /**
+     * pobiera wszystkie dane uzytkownika z bazy danych
+     */
+    const getUserByName = async (id_name) => {
+        const ref = doc(db, "users", id_name);
+        const snap = await getDoc(ref);
+        if (snap.exists()) {
+            return snap.data();
+        }
+    };
+
+    /**
+     * addPost
+     * pobieranie id danych uzytkownika + comit na serwer
+     */
     const addPost = async (e, title, desc, picture, closeForm) => {
         e.preventDefault();
         const { displayName, photoURL, uid } = getUser();
@@ -100,6 +145,10 @@ const useFirebase = () => {
         closeForm();
     };
 
+    /**
+     * getPost
+     * jest to zbior 2 funkcji ktory umozliwania dynamiczne pobieranie postow
+     */
     const getPosts = {
         postsFirstBatch: async function () {
             try {
@@ -115,6 +164,7 @@ const useFirebase = () => {
                 data.forEach((doc) => {
                     posts.push({
                         id: doc.id,
+                        id_name: doc.data().id_name,
                         title: doc.data().title,
                         desc: doc.data().description,
                         user_name: doc.data().user_name,
@@ -146,6 +196,7 @@ const useFirebase = () => {
                 data.forEach((doc) => {
                     posts.push({
                         id: doc.id,
+                        id_name: doc.data().id_name,
                         title: doc.data().title,
                         desc: doc.data().description,
                         user_name: doc.data().user_name,
@@ -168,6 +219,7 @@ const useFirebase = () => {
         signOut,
         getUser,
         getUserByUid,
+        getUserByName,
         addPost,
         getPosts,
     };

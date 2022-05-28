@@ -3,6 +3,12 @@ import Popupform from "./PopupForm";
 import Post from "./Post";
 import { useAuth } from "../context/auth";
 
+/**
+ * Jest to glówna sekcja apliakcji,
+ * odpowiada za mozliwość dodania posta,
+ * i za wyswietlanie postów
+ */
+
 const Main = ({ photoURL, displayName, id_name }) => {
     const [popupForm, setPopupForm] = useState(false);
     const { getPosts } = useAuth();
@@ -77,9 +83,18 @@ const Main = ({ photoURL, displayName, id_name }) => {
             <div>
                 <div>
                     {posts.map(
-                        ({ id, user_name, user_photo, title, desc, time }) => (
+                        ({
+                            id,
+                            id_name,
+                            user_name,
+                            user_photo,
+                            title,
+                            desc,
+                            time,
+                        }) => (
                             <Post
                                 key={id}
+                                id_name={id_name}
                                 name={user_name}
                                 picture={user_photo}
                                 title={title}
