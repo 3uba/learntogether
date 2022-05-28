@@ -6,12 +6,7 @@ import { useRouter } from "next/router";
 
 const Home = () => {
     const Router = useRouter();
-    const { getUser } = useAuth();
     const { authorId } = Router.query;
-
-    useEffect(() => {
-        getUser() == null && router.push("/signup");
-    });
 
     return (
         <div>

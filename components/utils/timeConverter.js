@@ -16,5 +16,5 @@ export const secondstoddmmyy = (s) => {
         return (`Published ${Math.round(((now - date)/1000)/60/60)} hours ago`)
     }
     
-    return (`${date.getDay()} ${monthNames[date.getMonth()]} ${date.getFullYear()}`)
+    return (`${date.getDate()} ${monthNames[date.getMonth()]} ${date.getFullYear()}`)
 }

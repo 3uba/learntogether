@@ -3,7 +3,7 @@ import Popupform from "./PopupForm";
 import Post from "./Post";
 import { useAuth } from "../context/auth";
 
-const Main = ({ photoURL, displayName }) => {
+const Main = ({ photoURL, displayName, id_name }) => {
     const [popupForm, setPopupForm] = useState(false);
     const { getPosts } = useAuth();
 

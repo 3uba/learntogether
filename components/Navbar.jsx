@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../context/auth";
 
-import { RightMenuDiv } from "./RightMenu";
+import { MenuButton } from "./Menu";
 import { MdLogout, MdEvent, MdMessage } from "react-icons/md";
 
 const Navbar = ({ photoURL, displayName, email }) => {
@@ -16,31 +16,31 @@ const Navbar = ({ photoURL, displayName, email }) => {
         <div>Loading...</div>
     ) : (
         <div className="w-[18vw] h-[100vh] flex flex-col items-center relative bg-[#242526] text-[#fff] p-4">
-            <RightMenuDiv link="/account">
+            <MenuButton link="/account">
                 <img
                     src={photoURL}
                     alt=""
                     className="rounded-full w-9 h-9 m-2"
                 />
                 <span className="text-l font-semibold p-2">{displayName}</span>
-            </RightMenuDiv>
+            </MenuButton>
 
-            <RightMenuDiv link="/events">
+            <MenuButton link="/events">
                 <MdEvent size={28} className="m-2" />
                 <span className="text-l font-semibold p-2">Events</span>
-            </RightMenuDiv>
+            </MenuButton>
 
-            <RightMenuDiv link="/messages">
+            <MenuButton link="/messages">
                 <MdMessage size={28} className="m-2" />
                 <span className="text-l font-semibold p-2">Messages</span>
-            </RightMenuDiv>
+            </MenuButton>
 
-            <RightMenuDiv className="absolute bottom-2">
+            <MenuButton className="absolute bottom-2">
                 <MdLogout size={28} className="m-2" />
                 <button onClick={signOut} className="p-2">
                     <p className="text-l font-semibold">Sign Out</p>
                 </button>
-            </RightMenuDiv>
+            </MenuButton>
         </div>
     );
 };

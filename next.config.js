@@ -13,18 +13,7 @@ module.exports = {
     //     domains: ["lh3.googleusercontent.com"],
     //     formats: ["image/webp"],
     // }
+    // Fixes npm packages that depend on `fs` module
     
-    "browser": {
-        "fs": false,
-        "path": false,
-        "os": false
-    },
-    webpack: (config, { isServer }) => {
-        if(!isServer) {
-            config.node = {
-                fs: 'empty'
-            }
-        }
-        return config
-    }
+      
 }
