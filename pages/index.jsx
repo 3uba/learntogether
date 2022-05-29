@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "../context/auth";
 
-import App from "../components/App";
+import App from "../context/app.js";
 import Main from "../components/Main";
 
 const Home = () => {

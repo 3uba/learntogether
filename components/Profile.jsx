@@ -1,18 +1,18 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "../context/auth";
 
-const Profile = ({ name_id }) => {
+const Profile = ({ id_name }) => {
     const { getUserByName } = useAuth();
 
     const [userData, setUserData] = useState({});
 
     useEffect(() => {
         const fetch = async () => {
-            setUserData(await getUserByName(name_id));
+            setUserData(await getUserByName(id_name));
         };
 
         fetch();
-    }, [getUserByName, name_id, userData]);
+    }, [getUserByName, id_name, userData]);
 
     const { displayName, photoURL } = userData;
 
@@ -25,7 +25,7 @@ const Profile = ({ name_id }) => {
             </div>
             <div className="w-[80%] h-[100%] flex flex-col justify-center">
                 <div className="text-white">{displayName}</div>
-                <div className="text-white">@{name_id}</div>
+                <div className="text-white">@{id_name}</div>
             </div>
         </div>
     );

@@ -1,7 +1,8 @@
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 
 import Profile from "../../components/Profile";
-import App from "../../components/App";
+import App from "../../context/app.js";
 /**
  * [author.jsx]
  * odpowiada za wyswietlanie profilowego,
@@ -9,16 +10,28 @@ import App from "../../components/App";
  * podzielony jest na 2 sekcje ktore znajdziesz w 'components'
  */
 
+export function isRouterReady(router) {
+    return router.asPath !== router.route;
+}
+
 const Home = () => {
     const router = useRouter();
-    const { name_id } = router.query;
+    const { id_name } = router.query;
 
-    return (
+    // useEffect(() => {
+    //     if (!user) {
+    //         router.push("/")
+    //     }
+    // }, [router, id_name]);
+
+    return id_name ? (
         <App>
             <div className="bg-[#242526] w-[60vw] h-[100vh]">
-                <Profile name_id={name_id} />
+                <Profile id_name={id_name} />
             </div>
         </App>
+    ) : (
+        <div className="">Loading...</div>
     );
 };
 

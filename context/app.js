@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { useAuth } from "../context/auth";
+import { useAuth } from "./auth";
 
 import Navbar from "../components/Navbar";
 import Notifications from "../components/Notifications";
@@ -26,7 +26,7 @@ const App = ({ children }) => {
     ) : (
         <div className="w-[100vw] h-[100vh] flex">
             <Navbar {...user} />
-            {children}
+                {children}
             <Notifications />
         </div>
     );
