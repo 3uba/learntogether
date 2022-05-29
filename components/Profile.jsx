@@ -12,7 +12,9 @@ const Profile = ({ id_name }) => {
         };
 
         fetch();
-    }, [getUserByName, id_name, userData]);
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [id_name]);
 
     const { displayName, photoURL } = userData;
 

@@ -59,7 +59,7 @@ const useFirebase = () => {
 
                 router.push("/");
             })
-            .catch((err) => console.log("signUp error"));
+            .catch((err) => console.log(`error ${err}`));
     };
 
     /*

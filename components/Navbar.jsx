@@ -15,33 +15,42 @@ const Navbar = ({ photoURL, displayName, email }) => {
     return loading ? (
         <div>Loading...</div>
     ) : (
-        <div className="w-[18vw] h-[100vh] flex flex-col items-center relative bg-[#242526] text-[#fff] p-4">
+        <div className="w-[18vw] md:w-[10vw] h-[96vh] flex flex-col items-center relative bg-[#f0f2f5] text-[#222] p-4">
             <MenuButton link="/account">
                 <img
                     src={photoURL}
                     alt=""
                     className="rounded-full w-9 h-9 m-2"
                 />
-                <span className="text-l font-semibold p-2">{displayName}</span>
+                <span className="text-l font-semibold p-2 md:hidden">
+                    {displayName}
+                </span>
             </MenuButton>
             <MenuButton link="/">
                 <MdHome size={28} className="m-2" />
-                <span className="text-l font-semibold p-2">Home</span>
+                <span className="text-l font-semibold p-2 md:hidden">Home</span>
             </MenuButton>
             <MenuButton link="/events">
                 <MdEvent size={28} className="m-2" />
-                <span className="text-l font-semibold p-2">Events</span>
+                <span className="text-l font-semibold p-2 md:hidden">
+                    Events
+                </span>
             </MenuButton>
 
             <MenuButton link="/messages">
                 <MdMessage size={28} className="m-2" />
-                <span className="text-l font-semibold p-2">Messages</span>
+                <span className="text-l font-semibold p-2 md:hidden">
+                    Messages
+                </span>
             </MenuButton>
 
             <MenuButton className="absolute bottom-2">
-                <MdLogout size={28} className="m-2" />
-                <button onClick={signOut} className="p-2">
-                    <p className="text-l font-semibold">Sign Out</p>
+                <button
+                    onClick={signOut}
+                    className="p-2 md:p-0 flex items-center"
+                >
+                    <MdLogout size={28} className="m-2" />
+                    <p className="text-l font-semibold md:hidden">Sign Out</p>
                 </button>
             </MenuButton>
         </div>

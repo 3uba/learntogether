@@ -12,7 +12,7 @@ import { secondstoddmmyy } from "./utils/timeConverter";
 
 const Post = ({ id_name, name, picture, title, desc, time }) => {
     return (
-        <div className="w-[45vw] m-[2vw] pt-[1rem] pb-[2rem] px-[2rem] min-h-[20vh] bg-[#3a3b3c] text-[#fff] rounded-sm">
+        <div className="w-[45vw] m-[2vw] pt-[1rem] pb-[2rem] px-[2rem] min-h-[20vh] bg-[#3a3b3c] text-[#222] rounded-sm">
             <div className="flex w-[100%] pt-[0.2rem] pb-[0.8rem] items-center justify-between">
                 <Link href={`/user/${id_name}`}>
                     <div className="flex items-center cursor-pointer">

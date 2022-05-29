@@ -4,6 +4,7 @@ import { useAuth } from "./auth";
 
 import Navbar from "../components/Navbar";
 import Notifications from "../components/Notifications";
+import Logo from "../components/Logo"
 
 const App = ({ children }) => {
     const { getUser } = useAuth();
@@ -24,10 +25,13 @@ const App = ({ children }) => {
     return loading ? (
         <div className="">Loading...</div>
     ) : (
-        <div className="w-[100vw] h-[100vh] flex">
-            <Navbar {...user} />
-                {children}
-            <Notifications />
+        <div className="w-[100vw] h-[100vh] flex flex-col">
+            <Logo />
+            <div className="w-[100vw] h-[96vh] flex" >
+                <Navbar {...user} />
+                    {children}
+                <Notifications />
+            </div>
         </div>
     );
 };

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 
 import Profile from "../../components/Profile";
+import Posts from "../../components/Posts";
 import App from "../../context/app.js";
 /**
  * [author.jsx]
@@ -26,8 +27,9 @@ const Home = () => {
 
     return id_name ? (
         <App>
-            <div className="bg-[#242526] w-[60vw] h-[100vh]">
+            <div className="bg-[#f0f2f5] w-[60vw] h-[100vh]">
                 <Profile id_name={id_name} />
+                <Posts id_name={id_name} />
             </div>
         </App>
     ) : (
