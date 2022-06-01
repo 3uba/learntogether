@@ -27,7 +27,7 @@ const Home = () => {
 
     return id_name ? (
         <App>
-            <div className="bg-[#f0f2f5] w-[60vw] max-h-[96vh] ">
+            <div className="bg-[#f0f2f5] w-[60vw] max-h-[96vh] 2xl:px-[1rem] 2xl:w-[82vw] xl:px-2 md:w-[100vw] lg:px-3">
                 <Profile id_name={id_name} />
                 <Posts id_name={id_name} />
             </div>

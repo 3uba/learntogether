@@ -19,8 +19,8 @@ const Profile = ({ id_name }) => {
     const { displayName, photoURL } = userData;
 
     return (
-        <div className="w-[100%] h-[18vh] flex items-center">
-            <div className="w-[20%] h-[100%] flex items-center justify-center">
+        <div className="w-[100%] h-[18vh] flex items-center justify-left">
+            <div className="w-auto h-[100%] flex items-center justify-center mr-[1.2rem]">
                 <div className="">
                     <img src={photoURL} alt="" className="rounded-xl " />
                 </div>

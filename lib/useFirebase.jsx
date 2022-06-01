@@ -257,8 +257,7 @@ const useFirebase = () => {
             posts.push(doc.data());
         });
 
-        if (posts.length) return posts;
-        return "This user don't";
+        return posts;
     };
 
     const sendComment = async (value, id) => {

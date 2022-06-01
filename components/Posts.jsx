@@ -5,25 +5,29 @@ import Post from "./Post";
 const Posts = ({ id_name }) => {
     const [posts, setPosts] = useState([]);
     const [user, setUser] = useState();
+    const [loading, setLoading] = useState(true);
 
     const { getPostsByUser, getUser } = useAuth();
 
     const fetch = async () => {
         setPosts(await getPostsByUser(id_name));
+
+        // console.log(posts == undefined);
         setUser(await getUser());
     };
 
     useEffect(() => {
+        setLoading(true);
         fetch();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [setPosts]);
+        setLoading(false);
 
-    return !posts.length ? (
-        <div className="">Loading..</div>
-    ) : (
-        <div className="w-[100%] ">
-            <div>
-                {posts.map(
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    const Posts = () => (
+        <>
+            {posts.length != 0 &&
+                posts.map(
                     (
                         {
                             id,
@@ -52,8 +56,19 @@ const Posts = ({ id_name }) => {
                         </div>
                     )
                 )}
+        </>
+    );
+
+    return loading ? (
+        <div className="">Loading...</div>
+    ) : posts.length != 0 ? (
+        <div className="w-[100%] ">
+            <div>
+                <Posts />
             </div>
         </div>
+    ) : (
+        <div className="">User don&apos;t have posts</div>
     );
 };
 

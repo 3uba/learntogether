@@ -7,7 +7,7 @@ export const MenuButton = (props) => {
         >
             {props.link !== undefined ? (
                 <Link href={props.link}>
-                    <a className="flex items-center justify-left">
+                    <a className="flex items-center justify-left md:w-[10vw] md:justify-center">
                         {props.children}
                     </a>
                 </Link>

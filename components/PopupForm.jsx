@@ -28,7 +28,7 @@ const Popupform = ({ photoURL, name, setPopupForm, visible }) => {
             onClick={() => closeForm()}
         >
             <form
-                className="w-[35vw] h-[75vh] text-[#222] bg-[#fff] shadow-[0px_2px_10px_1px_rgba(0,0,0,0.3)] rounded-md pt-3 px-8 relative"
+                className="w-[35vw] lg:w-[75vw] md:w-[90vw] h-[75vh] text-[#222] bg-[#fff] shadow-[0px_2px_10px_1px_rgba(0,0,0,0.3)] rounded-md pt-3 px-8 relative"
                 onClick={(e) => e.stopPropagation()}
                 onSubmit={(e) => {
                     addPost(e, title, desc, file, closeForm);
@@ -88,7 +88,7 @@ const Popupform = ({ photoURL, name, setPopupForm, visible }) => {
                                 className="max-h-[20vh]"
                             />
                         ) : (
-                            <div className="min-w-[28vw] w-[100%] h-[20vh] border-2 flex flex-col items-center justify-center border-dotted">
+                            <div className="min-w-[28vw] lg:w-[70vw] w-[100%] h-[20vh] border-2 flex flex-col items-center justify-center border-dotted">
                                 <h1>Drop or get file</h1>
                                 <h5>[png, jpeg]</h5>
                             </div>
