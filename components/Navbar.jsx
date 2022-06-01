@@ -15,30 +15,30 @@ const Navbar = ({ photoURL, displayName, email }) => {
     return loading ? (
         <div>Loading...</div>
     ) : (
-        <div className="w-[18vw] md:w-[10vw] h-[96vh] flex flex-col items-center relative bg-[#f0f2f5] text-[#222] p-4">
+        <div className="w-[18vw] lg:w-auto h-[96vh] flex flex-col items-center relative bg-[#f0f2f5] text-[#222] p-4 xl:p-0">
             <MenuButton link="/account">
                 <img
                     src={photoURL}
                     alt=""
-                    className="rounded-full w-9 h-9 m-2"
+                    className="rounded-full w-9 h-9 m-2 lg:m-0"
                 />
                 <span className="text-l font-semibold p-2 md:hidden">
                     {displayName}
                 </span>
             </MenuButton>
             <MenuButton link="/">
-                <MdHome size={28} className="m-2" />
+                <MdHome size={28} className="m-2 lg:m-0" />
                 <span className="text-l font-semibold p-2 md:hidden">Home</span>
             </MenuButton>
             <MenuButton link="/events">
-                <MdEvent size={28} className="m-2" />
+                <MdEvent size={28} className="m-2 lg:m-0" />
                 <span className="text-l font-semibold p-2 md:hidden">
                     Events
                 </span>
             </MenuButton>
 
             <MenuButton link="/messages">
-                <MdMessage size={28} className="m-2" />
+                <MdMessage size={28} className="m-2 lg:m-0" />
                 <span className="text-l font-semibold p-2 md:hidden">
                     Messages
                 </span>

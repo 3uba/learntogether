@@ -1,6 +1,6 @@
 const Logo = () => {
     return (
-        <div className="bg-[#390099] tracking-wide w-[100vw] h-[4vh] text-white shadow-2xl font-arvo text-center items-center flex justify-center">
+        <div className="bg-[#390099] tracking-wide max-w-[100%] w-[100vw] h-[4vh] text-white shadow-2xl font-arvo text-center items-center flex justify-center">
             LearnTogether
         </div>
     );

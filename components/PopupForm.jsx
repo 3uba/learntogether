@@ -50,10 +50,11 @@ const Popupform = ({ photoURL, name, setPopupForm, visible }) => {
                         <select
                             name=""
                             id=""
+                            defaultValue="Other"
                             onChange={(e) => setTitle(e.target.value)}
                             className="form-control px-[4px] py-2 resize-none w-[100%] h-[5vh] duration-300 bg-[#fff] text-xl text-[#222] focus:border-none focus:outline-none"
                         >
-                            <option value="" selected disabled hidden>
+                            <option value="Other" selected disabled hidden>
                                 Choose your category
                             </option>
                             <option value="Math"> 📐 Math </option>
@@ -97,7 +98,7 @@ const Popupform = ({ photoURL, name, setPopupForm, visible }) => {
 
                 <button
                     type="submit"
-                    className="hover:bg-[#390099] hover:text-white w-[96%] bg-[#E4E6E9] text-[#222] font-800  text-md py-3 px-16 rounded-sm bottom-3 right-[2%] absolute duration-200"
+                    className="hover:bg-[#390099] hover:text-white w-[96%] bg-[#E4E6E9] text-[#222] font-800  text-md py-3 px-16 rounded bottom-3 right-[2%] absolute duration-200"
                 >
                     Share
                 </button>

@@ -26,8 +26,8 @@ const Profile = ({ id_name }) => {
                 </div>
             </div>
             <div className="w-[80%] h-[100%] flex flex-col justify-center">
-                <div className="text-white">{displayName}</div>
-                <div className="text-white">@{id_name}</div>
+                <div className="text-[#222]">{displayName}</div>
+                <div className="text-[#222]">@{id_name}</div>
             </div>
         </div>
     );

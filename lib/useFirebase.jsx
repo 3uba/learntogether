@@ -5,7 +5,22 @@ import { useRouter } from "next/router";
 import { signInWithPopup, GoogleAuthProvider, getAuth } from "@firebase/auth";
 import { auth, db, postImages } from "./firebase";
 import { uploadBytes } from "firebase/storage";
-import { collection, addDoc, doc, getDoc } from "firebase/firestore";
+import {
+    Firebase,
+    collection,
+    addDoc,
+    doc,
+    ref,
+    set,
+    push,
+    getDoc,
+    setDoc,
+    query,
+    getDocs,
+    where,
+    onChildChanged,
+    FieldValue,
+} from "firebase/firestore";
 
 const useFirebase = () => {
     /**
@@ -42,6 +57,7 @@ const useFirebase = () => {
                             uid: res.user.uid,
                             displayName: res.user.displayName,
                             photoURL: res.user.photoURL,
+                            posts: [],
                         },
                         { merge: true }
                     );
@@ -104,6 +120,7 @@ const useFirebase = () => {
     const getUserByName = async (id_name) => {
         const ref = doc(db, "users", id_name);
         const snap = await getDoc(ref);
+
         if (snap.exists()) {
             return snap.data();
         }
@@ -129,6 +146,7 @@ const useFirebase = () => {
             time: new Date(),
             done: false,
             photo: picture ? String(picture) : "",
+            comments: [],
         };
 
         uploadBytes(postImages, picture);
@@ -136,11 +154,17 @@ const useFirebase = () => {
         const dbInstance = collection(db, "posts_lt");
 
         addDoc(dbInstance, post)
-            .then(() => {
+            .then((ref) => {
+                setDoc(
+                    doc(db, "users", id_name),
+                    { posts: [ref.id] },
+                    { merge: true }
+                );
+
                 alert("Added post succesfully");
             })
             .catch((err) => {
-                alert("Error");
+                alert(`Error ${err}`);
             });
         closeForm();
     };
@@ -170,6 +194,9 @@ const useFirebase = () => {
                         user_name: doc.data().user_name,
                         user_photo: doc.data().user_photo,
                         time: doc.data().time,
+                        comments: doc.data().comments
+                            ? doc.data().comments
+                            : ["Nie ma zadnych postow"],
                     });
 
                     lastKey = doc.data().time;
@@ -202,6 +229,9 @@ const useFirebase = () => {
                         user_name: doc.data().user_name,
                         user_photo: doc.data().user_photo,
                         time: doc.data().time,
+                        comments: doc.data().comments.length
+                            ? doc.data().comments
+                            : ["Nie ma zadnych postow"],
                     });
 
                     lastKey = doc.data().time;
@@ -214,6 +244,59 @@ const useFirebase = () => {
         },
     };
 
+    const getPostsByUser = async (id_name) => {
+        const q = query(
+            collection(db, "posts_lt"),
+            where("id_name", "==", id_name)
+        );
+        const snap = await getDocs(q);
+
+        let posts = new Array();
+
+        snap.forEach((doc) => {
+            posts.push(doc.data());
+        });
+
+        if (posts.length) return posts;
+        return "This user don't";
+    };
+
+    const sendComment = async (value, id) => {
+        const uid = await getUser().uid;
+
+        const id_name = await getUserByUid(uid);
+        const user = await getUserByName(id_name);
+        const ref = doc(db, "posts_lt", id);
+        const snap = await getDoc(ref);
+
+        let comments = [];
+
+        if (snap.exists()) {
+            comments = await snap.data().comments;
+            console.log(snap.data());
+            console.log(comments);
+        }
+
+        const userData = {
+            id_name: id_name,
+            name: user.displayName,
+            photoURL: user.photoURL,
+            comment: value,
+        };
+
+        comments.push(userData);
+
+        console.log(comments);
+
+        await setDoc(
+            ref,
+            {
+                comments: comments,
+            },
+            { merge: true }
+        );
+    };
+
     return {
         signUp,
         signOut,
@@ -222,6 +305,8 @@ const useFirebase = () => {
         getUserByName,
         addPost,
         getPosts,
+        getPostsByUser,
+        sendComment,
     };
 };
 
