@@ -50,7 +50,7 @@ const Main = ({ photoURL, displayName, id_name }) => {
     };
 
     return (
-        <div className="w-[60vw] 2xl:w-[82vw] xl:w-[90vw] md:w-[100vw] h-[96h] bg-[#f0f2f5] text-[#222] px-8 lg:px-0 flex flex-col items-center no-scrollbar .no-scrollbar::-webkit-scrollbar overflow-y overflow-x-hidden overflow-scroll">
+        <div className="w-[60vw] 2xl:w-[82vw] border-x-[0.1rem] border-[#ddd] xl:w-[90vw] md:w-[100vw] h-[96h] bg-[#f0f2f5] text-[#222] px-8 lg:px-0 flex flex-col items-center no-scrollbar .no-scrollbar::-webkit-scrollbar overflow-y overflow-x-hidden overflow-scroll">
             <div className="flex flex-col w-[full] mx-6 sm:mx-1 my-10 items-left justify-center md:text-4xl text-7xl font-arvo">
                 <span className="drop-shadow-xl ">Good morning</span>
             </div>

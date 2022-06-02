@@ -27,7 +27,7 @@ const Home = () => {
 
     return id_name ? (
         <App>
-            <div className="bg-[#f0f2f5] w-[60vw] max-h-[96vh] 2xl:px-[1rem] 2xl:w-[82vw] xl:px-2 md:w-[100vw] lg:px-3">
+            <div className="bg-[#f0f2f5] border-x-[.1rem] border-[#ddd] w-[60vw] max-h-[96vh] 2xl:border-r-0 2xl:w-[82vw]  md:w-[100vw] md:p-0 md:border-0 no-scrollbar .no-scrollbar::-webkit-scrollbar overflow-y overflow-x-hidden overflow-scroll">
                 <Profile id_name={id_name} />
                 <Posts id_name={id_name} />
             </div>

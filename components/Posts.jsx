@@ -46,7 +46,7 @@ const Posts = ({ id_name }) => {
                                 key={id}
                                 id_name={id_name}
                                 name={user_name}
-                                picture={user_photo}
+                                photoURL={user_photo}
                                 title={title}
                                 desc={description}
                                 time={time}
@@ -62,7 +62,7 @@ const Posts = ({ id_name }) => {
     return loading ? (
         <div className="">Loading...</div>
     ) : posts.length != 0 ? (
-        <div className="w-[100%] ">
+        <div className="w-[100%] px-[2rem]">
             <div>
                 <Posts />
             </div>

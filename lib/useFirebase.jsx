@@ -58,6 +58,8 @@ const useFirebase = () => {
                             displayName: res.user.displayName,
                             photoURL: res.user.photoURL,
                             posts: [],
+                            trusting: [],
+                            trusts: [],
                         },
                         { merge: true }
                     );
@@ -257,7 +259,7 @@ const useFirebase = () => {
             posts.push(doc.data());
         });
 
-        return posts;
+        return posts.reverse();
     };
 
     const sendComment = async (value, id) => {
@@ -296,6 +298,29 @@ const useFirebase = () => {
         );
     };
 
+    const checkTrusting = async (id_name) => {
+        const { uid } = await getUser();
+        const name = await getUserByUid(uid);
+        const { trusting } = await getUserByName(name);
+
+        console.log(trusting);
+
+        if (trusting.includes(String(id_name))) return true;
+        return false;
+    };
+
+    const trustToggle = async (id_name, option) => {
+        const { uid } = await getUser();
+        const name = await getUserByUid(uid);
+        const { trusting } = await getUserByName(name);
+
+        if (option) {
+            await setDoc(doc(db, "users", name), {
+                test: "test123",
+            });
+        }
+    };
+
     return {
         signUp,
         signOut,
@@ -306,6 +331,8 @@ const useFirebase = () => {
         getPosts,
         getPostsByUser,
         sendComment,
+        checkTrusting,
+        trustToggle,
     };
 };
 
