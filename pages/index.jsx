@@ -12,7 +12,9 @@ const Home = () => {
         setUser(getUser());
     }, [getUser, setUser]);
 
-    return (
+    return !user ? (
+        <div>Loading...</div>
+    ) : (
         <App>
             <Main {...user} />
         </App>
