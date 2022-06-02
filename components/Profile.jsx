@@ -34,15 +34,15 @@ const Profile = ({ id_name }) => {
     return loading ? (
         <div className="">Loading...</div>
     ) : (
-        <div className="w-[100%] h-[32vh] flex flex-col items-center justify-bottom relative mb-[5vh]">
-            <div className="absolute bg-[#fff] w-[100%] h-[78%] top-0 left-0 z-0">
+        <div className="w-[100%] h-[40vh] flex flex-col items-center justify-bottom relative mb-[2vh] bg-[#fff]">
+            <div className="absolute bg-[#fff] w-[100%] h-[58%] top-0 left-0 z-0">
                 <img
                     src={"https://picsum.photos/1920/1080"}
                     alt="Loading..."
                     className="object-cover w-[100%] h-[100%]"
                 />
             </div>
-            <div className="absolute bottom-0 z-10 px-[2rem] w-[100%] flex items-center justify-left flex-col">
+            <div className="absolute top-[30%] z-10 px-[2rem] w-[100%] flex items-center justify-left flex-col">
                 <div className="w-[100%] h-[16vh] flex items-center justify-left ">
                     <div className="">
                         <img
@@ -66,18 +66,17 @@ const Profile = ({ id_name }) => {
                         </div>
                     </div>
                     <div
-                        className="flex px-[2vw] items-center justify-center cursor-pointer select-none"
+                        className="flex px-[2vw] items-top justify-center cursor-pointer select-none"
                         onClick={() => setTrust(!trust)}
                     >
                         {trust ? (
-                            <MdStar size={24} style={{ color: "gold" }} />
+                            <MdStar size={24} style={{ color: "#390099" }} />
                         ) : (
                             <MdStarOutline size={24} />
                         )}
                         <span className="px-[0.3vw]">Trust</span>
                     </div>
                 </div>
-                <hr className="pb-[.3rem]" />
             </div>
         </div>
     );
