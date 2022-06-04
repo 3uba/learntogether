@@ -1,33 +1,38 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "../context/auth";
-
+import { useRouter } from "next/router";
 import { MdStar, MdStarOutline } from "react-icons/md";
 
-const Profile = ({ id_name }) => {
-    const { getUserByName, trustToggle, checkTrusting } = useAuth();
-    const [loading, setLoading] = useState(true);
-    const [trust, setTrust] = useState();
+const Profile = ({ id_name, current }) => {
+    const { getUserByName, trustAction, checkTrusting, trustCount } = useAuth();
 
+    const [loading, setLoading] = useState(true);
+    const [trust, setTrust] = useState(false);
+    const [trustCounter, setTrustCounter] = useState(1);
     const [userData, setUserData] = useState({});
 
     const fetch = async () => {
+        setTrustCounter(Number(await trustCount(id_name)));
         setUserData(await getUserByName(id_name));
-
-        setTrust(await checkTrusting());
+        setTrust(await checkTrusting(id_name));
 
         setLoading(false);
     };
 
     useEffect(() => {
         fetch();
-
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [id_name]);
 
-    useEffect(() => {
-        // trustToggle(id_name, trust);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [trust]);
+    const trustToggle = async () => {
+        setTrust(!trust);
+        {
+            trustAction(id_name, !trust);
+        }
+        !trust
+            ? setTrustCounter(trustCounter + 1)
+            : setTrustCounter(trustCounter - 1);
+    };
 
     const { displayName, photoURL } = userData;
 
@@ -60,23 +65,27 @@ const Profile = ({ id_name }) => {
                         <div className="text-[#333]">@{id_name}</div>
                         <div className="text-[#333] py-[.4rem]">
                             <span className="text-[#000] font-semibold">
-                                808
+                                {trustCounter}
                             </span>{" "}
                             people trust
                         </div>
                     </div>
                     <div
                         className={`flex px-[2vw] items-top justify-center cursor-pointer select-none`}
-                        onClick={() => setTrust(!trust)}
+                        onClick={() => trustToggle()}
                     >
                         <div
                             className={`flex px-[2rem] h-[2rem] justify-center items-center rounded-[25px]  ${
                                 trust
                                     ? "bg-[#fff] text-[#390099]"
+                                    : current
+                                    ? "border-[#390099] border-[.1rem] bg-[#fff] text-[#390099] hover:bg-[#390099] hover:text-white duration-300"
                                     : "bg-[#390099] text-white"
                             }`}
                         >
-                            {trust ? (
+                            {current ? (
+                                <div className="">Edit profile</div>
+                            ) : trust ? (
                                 <>
                                     <MdStar
                                         size={24}

@@ -5,18 +5,19 @@ import { useRouter } from "next/router";
 import { signInWithPopup, GoogleAuthProvider, getAuth } from "@firebase/auth";
 import { auth, db, postImages } from "./firebase";
 import { uploadBytes } from "firebase/storage";
+import firebase from "firebase/compat/app";
 import {
-    Firebase,
     collection,
-    addDoc,
     doc,
     ref,
     set,
     push,
+    addDoc,
     getDoc,
     setDoc,
-    query,
+    updateDoc,
     getDocs,
+    query,
     where,
     onChildChanged,
     FieldValue,
@@ -274,8 +275,8 @@ const useFirebase = () => {
 
         if (snap.exists()) {
             comments = await snap.data().comments;
-            console.log(snap.data());
-            console.log(comments);
+            // console.log(snap.data());
+            // console.log(comments);
         }
 
         const userData = {
@@ -287,7 +288,7 @@ const useFirebase = () => {
 
         comments.push(userData);
 
-        console.log(comments);
+        // console.log(comments);
 
         await setDoc(
             ref,
@@ -303,22 +304,46 @@ const useFirebase = () => {
         const name = await getUserByUid(uid);
         const { trusting } = await getUserByName(name);
 
-        console.log(trusting);
+        // console.log(trusting);
 
-        if (trusting.includes(String(id_name))) return true;
+        if (trusting.includes(id_name)) return true;
         return false;
     };
 
-    const trustToggle = async (id_name, option) => {
+    const trustAction = async (id_name, trust) => {
         const { uid } = await getUser();
         const name = await getUserByUid(uid);
         const { trusting } = await getUserByName(name);
 
-        if (option) {
-            await setDoc(doc(db, "users", name), {
-                test: "test123",
+        if (trust) {
+            setDoc(
+                doc(db, "users", id_name),
+                {
+                    trusts: firebase.firestore.FieldValue.arrayUnion(name),
+                },
+                { merge: true }
+            );
+            setDoc(
+                doc(db, "users", name),
+                {
+                    trusting: firebase.firestore.FieldValue.arrayUnion(id_name),
+                },
+                { merge: true }
+            );
+        } else {
+            updateDoc(doc(db, "users", id_name), {
+                trusts: firebase.firestore.FieldValue.arrayRemove(name),
+            });
+            updateDoc(doc(db, "users", name), {
+                trusting: firebase.firestore.FieldValue.arrayRemove(id_name),
             });
         }
+    };
+
+    const trustCount = async (id_name) => {
+        const user = await getUserByName(id_name);
+
+        return user.trusts.length;
     };
 
     return {
@@ -332,7 +357,8 @@ const useFirebase = () => {
         getPostsByUser,
         sendComment,
         checkTrusting,
-        trustToggle,
+        trustAction,
+        trustCount,
     };
 };
 

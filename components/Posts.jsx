@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useAuth } from "../context/auth";
 import Post from "./Post";
 
-const Posts = ({ id_name }) => {
+const Posts = ({ id_name, current }) => {
     const [posts, setPosts] = useState([]);
     const [user, setUser] = useState();
     const [loading, setLoading] = useState(true);
@@ -22,7 +22,7 @@ const Posts = ({ id_name }) => {
         setLoading(false);
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [id_name]);
 
     const Posts = () => (
         <>
@@ -67,8 +67,10 @@ const Posts = ({ id_name }) => {
                 <Posts />
             </div>
         </div>
+    ) : current ? (
+        <div className="pl-[2rem]">You don&apos;t have posts</div>
     ) : (
-        <div className="">User don&apos;t have posts</div>
+        <div className="pl-[2rem]">User don&apos;t have posts</div>
     );
 };
 

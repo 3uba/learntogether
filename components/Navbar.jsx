@@ -1,22 +1,32 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../context/auth";
-
+import { useRouter } from "next/router";
 import { MenuButton } from "./Menu";
 import { MdLogout, MdEvent, MdMessage, MdHome } from "react-icons/md";
 
-const Navbar = ({ photoURL, displayName, email }) => {
+const Navbar = ({ uid, photoURL, displayName, email }) => {
+    const router = useRouter();
+
+    const [idName, setIdName] = useState();
     const [loading, setLoading] = useState(true);
-    const { signOut } = useAuth();
+    const { getUserByUid, signOut } = useAuth();
+
+    const fetch = async () => {
+        setIdName(await getUserByUid(uid));
+    };
 
     useEffect(() => {
+        fetch();
         if (email != "undefined") setLoading(false);
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [email]);
 
     return loading ? (
         <div>Loading...</div>
     ) : (
         <div className="w-[18vw] h-[96vh] flex flex-col items-center relative bg-[#f0f2f5] text-[#222] p-4 xl:p-0  md:absolute md:bottom-0 md:h-[8vh] md:flex-row md:w-[100vw] md:items-center md:bg-[#fff] md:justify-center">
-            <MenuButton link="/account">
+            <MenuButton href={"/user/[id_name]"} link={`/user/${idName}`}>
                 <img
                     src={photoURL}
                     alt=""
@@ -26,18 +36,18 @@ const Navbar = ({ photoURL, displayName, email }) => {
                     {displayName}
                 </span>
             </MenuButton>
-            <MenuButton link="/">
+            <MenuButton href="/" link="/">
                 <MdHome size={28} className="m-2 lg:m-0 " />
                 <span className="text-l font-semibold p-2 md:hidden">Home</span>
             </MenuButton>
-            <MenuButton link="/events">
+            {/* <MenuButton link="/events">
                 <MdEvent size={28} className="m-2 lg:m-0 " />
                 <span className="text-l font-semibold p-2 md:hidden">
                     Events
                 </span>
-            </MenuButton>
+            </MenuButton> */}
 
-            <MenuButton link="/messages">
+            <MenuButton href="/messages" link="/messages">
                 <MdMessage size={28} className="m-2 lg:m-0 " />
                 <span className="text-l font-semibold p-2 md:hidden">
                     Messages
