@@ -22,7 +22,9 @@ const Post = ({ id, id_name, name, photoURL, title, desc, time, comments }) => {
 
     const sendData = (e, id) => {
         e.preventDefault();
-        const { id_name, name = displayName, photoURL } = user;
+        const { id_name, displayName, photoURL } = getUser();
+
+        const name = displayName;
 
         setPostComments((data) => [
             ...data,
