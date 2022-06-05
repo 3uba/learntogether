@@ -153,9 +153,9 @@ const useFirebase = () => {
 
         uploadBytes(postImages, picture);
 
-        const dbInstance = doc(db, "posts_lt");
+        const collection = collection(db, "posts_lt");
 
-        await setDoc(dbInstance, post, { merge: true })
+        await addDoc(collection, post)
             .then((ref) => {
                 setDoc(
                     doc(db, "users", id_name),
