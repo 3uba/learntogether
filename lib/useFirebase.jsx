@@ -133,7 +133,8 @@ const useFirebase = () => {
      * addPost
      * pobieranie id danych uzytkownika + comit na serwer
      */
-    const addPost = async (title, desc, picture, closeForm) => {
+    const addPost = async (e, title, desc, picture, closeForm) => {
+        e.preventDefault();
         const { displayName, photoURL, uid } = getUser();
 
         const id_name = await getUserByUid(uid);
@@ -147,15 +148,15 @@ const useFirebase = () => {
             description: desc,
             time: new Date(),
             done: false,
-            // photo: picture ? String(picture) : "",
+            photo: picture ? String(picture) : "",
             comments: [],
         };
 
         uploadBytes(postImages, picture);
 
-        const collection = collection(db, "posts_lt");
+        const dbInstance = collection(db, "posts_lt");
 
-        await addDoc(collection, post)
+        addDoc(dbInstance, post)
             .then((ref) => {
                 setDoc(
                     doc(db, "users", id_name),
@@ -256,7 +257,7 @@ const useFirebase = () => {
         let posts = new Array();
 
         snap.forEach((doc) => {
-            posts.push({ id: doc.id, ...doc.data() });
+            posts.push(doc.data());
         });
 
         return posts.reverse();
@@ -264,9 +265,9 @@ const useFirebase = () => {
 
     const sendComment = async (value, id) => {
         const uid = await getUser().uid;
+
         const id_name = await getUserByUid(uid);
         const user = await getUserByName(id_name);
-
         const ref = doc(db, "posts_lt", id);
         const snap = await getDoc(ref);
 
