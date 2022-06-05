@@ -155,7 +155,7 @@ const useFirebase = () => {
 
         const dbInstance = doc(db, "posts_lt");
 
-        await setDoc(dbInstance, post)
+        await setDoc(dbInstance, post, { merge: true })
             .then((ref) => {
                 setDoc(
                     doc(db, "users", id_name),
