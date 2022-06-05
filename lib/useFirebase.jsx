@@ -147,7 +147,7 @@ const useFirebase = () => {
             description: desc,
             time: new Date(),
             done: false,
-            photo: picture ? String(picture) : "",
+            // photo: picture ? String(picture) : "",
             comments: [],
         };
 
@@ -155,7 +155,7 @@ const useFirebase = () => {
 
         const dbInstance = collection(db, "posts_lt");
 
-        addDoc(dbInstance, { title: post.title, post })
+        await addDoc(dbInstance, { title: post.title, post })
             .then((ref) => {
                 setDoc(
                     doc(db, "users", id_name),
