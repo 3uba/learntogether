@@ -155,7 +155,7 @@ const useFirebase = () => {
 
         const dbInstance = collection(db, "posts_lt");
 
-        addDoc(dbInstance, post)
+        addDoc(dbInstance, { title: post.title, post })
             .then((ref) => {
                 setDoc(
                     doc(db, "users", id_name),
