@@ -27,7 +27,7 @@ const App = ({ children }) => {
     ) : (
         <div className="w-[100vw] max-w-[100%] h-[100%] flex flex-col">
             <Logo />
-            <div className="w-[100vw] max-w-[100%] h-[96vh] flex" >
+            <div className="w-[100vw] max-w-[100%] h-[96vh] md:h-[100%] flex" >
                 <Navbar {...user} />
                     {children}
                 <Notifications />
