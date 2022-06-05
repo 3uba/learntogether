@@ -15,14 +15,13 @@ import { useAuth } from "../context/auth";
 const Post = ({ id, id_name, name, photoURL, title, desc, time, comments }) => {
     const [user, setUser] = useState();
     const [form, setForm] = useState(false);
-    const [comment, setComment] = useState();
+    const [comment, setComment] = useState("");
     const [postComments, setPostComments] = useState(comments);
 
     const { getUser, sendComment } = useAuth();
 
     const sendData = (e, id) => {
         e.preventDefault();
-
         const { id_name, displayName = name, photoURL } = user;
 
         setPostComments((data) => [
@@ -32,6 +31,11 @@ const Post = ({ id, id_name, name, photoURL, title, desc, time, comments }) => {
 
         sendComment(comment, id);
         setComment("");
+    };
+
+    const handleComment = (e) => {
+        e.preventDefault();
+        setComment(e.target.value);
     };
 
     useEffect(() => {
@@ -91,7 +95,7 @@ const Post = ({ id, id_name, name, photoURL, title, desc, time, comments }) => {
                         placeholder="Send a comment"
                         className="rounded-full pl-[1rem] p-[.35rem] w-[95%] ml-[.5rem] bg-[#f0f2f5]"
                         value={comment}
-                        onChange={(e) => setComment(e.target.value)}
+                        onChange={handleComment}
                     />
                 </div>
 

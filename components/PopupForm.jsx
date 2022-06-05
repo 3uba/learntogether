@@ -7,6 +7,7 @@ const fileTypes = ["JPG", "PNG"];
 const Popupform = ({ photoURL, name, setPopupForm, visible }) => {
     const { addPost } = useAuth();
 
+    const [alert, setAlert] = useState(false);
     const [title, setTitle] = useState("");
     const [desc, setDesc] = useState("");
     const [file, setFiles] = useState({
@@ -22,6 +23,21 @@ const Popupform = ({ photoURL, name, setPopupForm, visible }) => {
         setPopupForm(false);
     };
 
+    const postHandler = (e) => {
+        e.preventDefault();
+
+        if (title != "_blank" && desc != "") {
+            setAlert(false);
+            addPost(e, title, desc, file, closeForm);
+        } else {
+            setAlert(true);
+            setTimeout(() => {
+                setAlert(false);
+            }, 5000);
+            console.log("test", alert);
+        }
+    };
+
     return (
         <div
             className={`${visible} left-0 top-0 absolute w-[100vw] h-[100vh] flex items-center justify-center bg-[#ffffff98] duration-300`}
@@ -30,13 +46,17 @@ const Popupform = ({ photoURL, name, setPopupForm, visible }) => {
             <form
                 className="w-[35vw] lg:w-[75vw] md:w-[90vw] h-[75vh] text-[#222] bg-[#fff] shadow-[0px_2px_10px_1px_rgba(0,0,0,0.3)] rounded-md pt-3 px-8 relative"
                 onClick={(e) => e.stopPropagation()}
-                onSubmit={(e) => {
-                    addPost(e, title, desc, file, closeForm);
-                }}
+                onSubmit={(e) => postHandler(e)}
             >
                 <h1 className="w-[100%] text-4xl p-2 pb-4 text-center broder-b-2 font-arvo">
                     Create post
                 </h1>
+                {/* <div
+                    className={` text-[1rem] p-[.1rem] border-[.05rem] text-center bg-[#dc354646] border-[#dc3545] text-[#dc3545] transition ease-in-out duration-500 z-[20] 
+                    ${alert ? "opacity-100" : "opacity-0"}`}
+                >
+                    Complete all required fields
+                </div> */}
                 <div className="flex flex-col items-center">
                     <div className="flex items-center m-2 w-[100%]">
                         <img
@@ -50,12 +70,16 @@ const Popupform = ({ photoURL, name, setPopupForm, visible }) => {
                         <select
                             name=""
                             id=""
-                            defaultValue="Other"
                             onChange={(e) => setTitle(e.target.value)}
-                            className="form-control px-[4px] py-2 resize-none w-[100%] h-[5vh] duration-300 bg-[#fff] text-xl text-[#222] focus:border-none focus:outline-none"
+                            className={`form-control px-[4px] py-[.056rem]  border-[.06rem] border-b-0 resize-none w-[100%] h-[5vh]  bg-[#fff] text-xl text-[#222] focus:border-none focus:outline-none 
+                                ${
+                                    alert
+                                        ? "border-[#de3545] duration-0"
+                                        : "border-[#fff] duration-300"
+                                }`}
                         >
-                            <option value="Other" selected disabled hidden>
-                                Choose your category
+                            <option value="_blank" selected disabled hidden>
+                                Choose your category *
                             </option>
                             <option value="Math"> 📐 Math </option>
                             <option value="History"> 🏛️ History</option>
@@ -70,8 +94,9 @@ const Popupform = ({ photoURL, name, setPopupForm, visible }) => {
                         <textarea
                             type="text"
                             onChange={(e) => setDesc(e.target.value)}
-                            className="form-control px-2 py-2 resize-none w-[100%] h-[20vh] bg-[#fff] text-xl text-[#222] focus:border-none focus:outline-none"
-                            placeholder={`Add description to specify the task`}
+                            className={`form-control px-2 py-2 resize-none w-[100%] h-[20vh]  border-[.06rem] border-t-0  bg-[#fff] text-xl text-[#222] focus:border-none focus:outline-none
+                            ${alert ? "border-[#de3545]" : "border-[#fff]"}`}
+                            placeholder={`Add description to specify the task *`}
                         />
                     </div>
                     <FileUploader

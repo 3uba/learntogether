@@ -5,6 +5,7 @@ import { useAuth } from "../../context/auth";
 import Profile from "../../components/Profile";
 import Posts from "../../components/Posts";
 import App from "../../context/app.js";
+
 /**
  * [author.jsx]
  * odpowiada za wyswietlanie profilowego,
@@ -17,14 +18,12 @@ export function isRouterReady(router) {
 }
 
 const Home = () => {
+    const router = useRouter();
     const { getUser, getUserByUid } = useAuth();
 
-    const router = useRouter();
     const { id_name } = router.query;
 
     const [current, setCurrent] = useState();
-    const [loading, setLoading] = useState(true);
-    // const { id_name } = router.query;
 
     const fetch = async () => {
         setCurrent(await getUserByUid(await getUser().uid));
@@ -32,7 +31,6 @@ const Home = () => {
 
     useEffect(() => {
         fetch();
-        current && setLoading(false);
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);

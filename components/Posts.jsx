@@ -12,10 +12,8 @@ const Posts = ({ id_name, current }) => {
     const fetch = async () => {
         setPosts(await getPostsByUser(id_name));
 
-        // console.log(posts == undefined);
         setUser(await getUser());
     };
-
     useEffect(() => {
         setLoading(true);
         fetch();
@@ -43,7 +41,7 @@ const Posts = ({ id_name, current }) => {
                     ) => (
                         <div key={key}>
                             <Post
-                                key={id}
+                                id={id}
                                 id_name={id_name}
                                 name={user_name}
                                 photoURL={user_photo}

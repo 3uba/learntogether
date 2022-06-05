@@ -55,7 +55,7 @@ const Main = ({ photoURL, displayName, id_name }) => {
                 <span className="drop-shadow-xl ">Good morning</span>
             </div>
 
-            <div className="w-[45vw] xl:w-[95%] md:h-[6.5vh] bg-[#ffffff] shadow-md px-8 lg:px-0 mb-2 rounded text-[#222] ">
+            <div className="w-[45vw] xl:w-[95%] md:pb-[.4rem] md:pt-0 bg-[#ffffff] shadow-md px-8 lg:px-0 mb-2 rounded text-[#222] ">
                 <div className="flex items-center pt-2 ">
                     <img
                         src={photoURL}
@@ -123,15 +123,20 @@ const Main = ({ photoURL, displayName, id_name }) => {
                         )
                     )}
                 </div>
-                {nextPosts_loading ? (
-                    <div className="">Loading...</div>
-                ) : lastKey ? (
-                    <button onClick={() => fetchMorePosts(lastKey)}>
-                        More posts
-                    </button>
-                ) : (
-                    <div className="">You are up to date!</div>
-                )}
+                <div className="md:mb-[5rem]">
+                    {nextPosts_loading ? (
+                        <div className="">Loading...</div>
+                    ) : lastKey ? (
+                        <button
+                            className=""
+                            onClick={() => fetchMorePosts(lastKey)}
+                        >
+                            More posts
+                        </button>
+                    ) : (
+                        <div className="">You are up to date!</div>
+                    )}
+                </div>
             </div>
         </div>
     );
