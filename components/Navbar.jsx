@@ -25,7 +25,7 @@ const Navbar = ({ uid, photoURL, displayName, email }) => {
     return loading ? (
         <div>Loading...</div>
     ) : (
-        <div className="w-[18vw] h-[96vh] flex flex-col items-center relative bg-[#f0f2f5] text-[#222] p-4 xl:p-0  md:absolute md:bottom-0 md:h-[8vh] md:flex-row md:w-[100vw] md:items-center md:bg-[#fff] md:justify-center">
+        <div className="w-[18vw] h-[96vh] flex flex-col items-center relative bg-[#f0f2f5] text-[#222] p-4 xl:p-0  md:fixed md:bottom-0 md:h-[8vh] md:flex-row md:w-[100vw] md:items-center md:bg-[#fff] md:justify-center">
             <MenuButton href={"/user/[id_name]"} link={`/user/${idName}`}>
                 <img
                     src={photoURL}
