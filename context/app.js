@@ -25,7 +25,7 @@ const App = ({ children }) => {
     return loading ? (
         <div className="">Loading...</div>
     ) : (
-        <div className="w-[100vw] max-w-[100%] h-[100vh] max-h-[100%] flex flex-col">
+        <div className="w-[100vw] max-w-[100%] h-[100vh] max-h-[100%]  flex flex-col">
             <Logo />
             <div className="w-[100vw] max-w-[100%] h-[96vh] flex" >
                 <Navbar {...user} />
