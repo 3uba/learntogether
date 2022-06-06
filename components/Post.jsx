@@ -18,18 +18,22 @@ const Post = ({ id, id_name, name, photoURL, title, desc, time, comments }) => {
     const [comment, setComment] = useState("");
     const [postComments, setPostComments] = useState(comments);
 
-    const { getUser, sendComment } = useAuth();
+    const { getUser, sendComment, getUserByUid } = useAuth();
 
-    const sendData = (e, id) => {
+    const sendData = async (e, id) => {
         e.preventDefault();
-        const { id_name, displayName, photoURL } = getUser();
+        const { uid, displayName, photoURL } = getUser();
 
-        const name = displayName;
+        console.log(id);
 
-        setPostComments((data) => [
-            ...data,
-            { comment, id_name, name, photoURL },
-        ]);
+        const newData = {
+            comment: comment,
+            id_name: String(await getUserByUid(uid)),
+            name: user.displayName,
+            photoURL: user.photoURL,
+        };
+
+        setPostComments((data) => [...data, newData]);
 
         sendComment(comment, id);
         setComment("");

@@ -71,11 +71,10 @@ const Profile = ({ id_name, current }) => {
                         </div>
                     </div>
                     <div
-                        className={`flex px-[2vw] items-top justify-center cursor-pointer select-none`}
-                        onClick={() => trustToggle()}
+                        className={`flex items-top justify-center cursor-pointer select-none`}
                     >
                         <div
-                            className={`flex px-[2rem] h-[2rem] justify-center items-center rounded-[25px]  ${
+                            className={`flex h-[2rem] justify-center items-center rounded-[25px]  ${
                                 trust
                                     ? "bg-[#fff] text-[#390099]"
                                     : current
@@ -84,9 +83,12 @@ const Profile = ({ id_name, current }) => {
                             }`}
                         >
                             {current ? (
-                                <div className="">Edit profile</div>
+                                <div className="px-[2vw]">Edit profile</div>
                             ) : trust ? (
-                                <>
+                                <div
+                                    className="px-[2vw] flex"
+                                    onClick={() => trustToggle()}
+                                >
                                     <MdStar
                                         size={24}
                                         style={{ color: "#390099" }}
@@ -94,9 +96,12 @@ const Profile = ({ id_name, current }) => {
                                     <span className="pl-[0.3vw] md:pl-[0.5vw]">
                                         Trusting
                                     </span>
-                                </>
+                                </div>
                             ) : (
-                                <>
+                                <div
+                                    className="px-[2vw] flex"
+                                    onClick={() => trustToggle()}
+                                >
                                     <MdStarOutline
                                         size={24}
                                         style={{
@@ -107,7 +112,7 @@ const Profile = ({ id_name, current }) => {
                                     <span className="pl-[0.3vw] md:pl-[0.5vw]">
                                         Trust
                                     </span>
-                                </>
+                                </div>
                             )}
                         </div>
                     </div>
