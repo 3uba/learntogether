@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useAuth } from "../../context/auth";
+import { useAuth } from "../context/auth";
 import { useRouter } from "next/router";
 
 import { FcGoogle } from "react-icons/fc";

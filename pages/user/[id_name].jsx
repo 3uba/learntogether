@@ -39,7 +39,7 @@ const Home = () => {
         <div className="">Loading...</div>
     ) : (
         <App>
-            <div className="bg-[#f0f2f5] border-x-[.1rem] border-[#ddd] w-[60vw] max-h-[96%] 2xl:border-r-0 2xl:w-[82vw]  md:w-[100vw] md:p-0 md:border-0 no-scrollbar .no-scrollbar::-webkit-scrollbar overflow-y overflow-x-hidden overflow-scroll">
+            <div className="bg-[#f0f2f5] border-x-[.1rem] border-[#ddd] w-[60vw] h-[96vh] 2xl:border-r-0 2xl:w-[82vw]  md:w-[100vw] md:p-0 md:border-0 no-scrollbar .no-scrollbar::-webkit-scrollbar overflow-y overflow-x-hidden overflow-scroll">
                 <Profile id_name={id_name} current={id_name === current} />
                 <Posts id_name={id_name} current={id_name === current} />
             </div>
